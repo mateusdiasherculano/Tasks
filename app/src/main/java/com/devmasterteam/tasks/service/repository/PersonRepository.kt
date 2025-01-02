@@ -20,12 +20,13 @@ class PersonRepository {
             if (response.code() == 200){
                response.body()?.let { listener.onSuccess(it) }
             }else{
-               listener.onFailure("")
+               // TODO - Tratar JSON
+               listener.onFailure(response.errorBody()!!.string())
             }
          }
 
          override fun onFailure(call: Call<PersonModel>, t: Throwable) {
-            val s = ""
+            listener.onFailure("Error inesperado.")
          }
       })
 

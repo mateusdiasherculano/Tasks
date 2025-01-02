@@ -17,11 +17,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     fun doLogin(email: String, password: String) {
         personRepository.login(email, password, object : APIListener<PersonModel> {
             override fun onSuccess(result: PersonModel) {
-                TODO("Not yet implemented")
             }
 
             override fun onFailure(message: String) {
-                TODO("Not yet implemented")
             }
         })
     }
