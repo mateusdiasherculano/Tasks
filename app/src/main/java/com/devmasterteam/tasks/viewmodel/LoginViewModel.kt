@@ -6,17 +6,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.devmasterteam.tasks.service.listener.APIListener
 import com.devmasterteam.tasks.service.model.PersonModel
+import com.devmasterteam.tasks.service.model.ValidationResult
 import com.devmasterteam.tasks.service.repository.PersonRepository
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private val personRepository = PersonRepository(application.applicationContext)
-    private val _login = MutableLiveData<PersonModel>()
-    val login: LiveData<PersonModel> = _login
-
-    private val _errorLogin = MutableLiveData<String>()
-    val error: LiveData<String> = _errorLogin
+    private val _login = MutableLiveData<ValidationResult>()
+    val login: LiveData<ValidationResult> = _login
 
     /**
      * Faz login usando API
@@ -24,11 +22,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     fun doLogin(email: String, password: String) {
         personRepository.login(email, password, object : APIListener<PersonModel> {
             override fun onSuccess(result: PersonModel) {
-                _login.value = result
+                _login.value = ValidationResult()
             }
 
             override fun onFailure(message: String) {
-                _errorLogin.value = message
+                _login.value = ValidationResult(message)
             }
         })
     }
