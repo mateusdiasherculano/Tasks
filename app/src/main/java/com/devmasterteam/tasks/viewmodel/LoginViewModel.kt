@@ -22,6 +22,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     private val _login = MutableLiveData<ValidationResult>()
     val login: LiveData<ValidationResult> = _login
 
+
+    private val _loggedUser = MutableLiveData<Boolean>()
+    val loggedUser: LiveData<Boolean> = _loggedUser
+
+
     /**
      * Faz login usando API
      */
@@ -48,6 +53,12 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
      * Verifica se usuário está logado
      */
     fun verifyLoggedUser() {
+        val token = securityPreferences.get(TaskConstants.SHARED.TOKEN_KEY)
+        val person = securityPreferences.get(TaskConstants.SHARED.PERSON_KEY)
+
+        RetrofitClient.addHeaders(token, person)
+
+        _loggedUser.value = (token != "" && person != "")
     }
 
 }

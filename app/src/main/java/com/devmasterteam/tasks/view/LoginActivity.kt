@@ -29,28 +29,37 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         binding.buttonLogin.setOnClickListener(this)
         binding.textRegister.setOnClickListener(this)
 
+        viewModel.verifyLoggedUser()
+
         // Observadores
         observe()
     }
 
     override fun onClick(v: View) {
-        if(v.id == R.id.button_login){
+        if (v.id == R.id.button_login) {
             handleLogin()
         }
     }
 
     private fun observe() {
         viewModel.login.observe(this) {
-            if(it.status()){
+            if (it.status()) {
                 startActivity(Intent(applicationContext, MainActivity::class.java))
                 finish()
-            }else{
+            } else {
                 Toast.makeText(applicationContext, it.message(), Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        viewModel.loggedUser.observe(this) {
+            if (it) {
+                startActivity(Intent(applicationContext, MainActivity::class.java))
+                finish()
             }
         }
     }
 
-    private fun handleLogin(){
+    private fun handleLogin() {
         val email = binding.editEmail.text.toString()
         val password = binding.editPassword.text.toString()
 
