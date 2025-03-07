@@ -27,9 +27,9 @@ interface TaskService {
     @FormUrlEncoded
     fun create(
         @Field("PriorityId") priorityId: Int,
-        @Field("PriorityId") description: String,
-        @Field("PriorityId") dueDate: String,
-        @Field("PriorityId") complete: Boolean,
+        @Field("Description") description: String,
+        @Field("DueDate") dueDate: String,
+        @Field("Complete") complete: Boolean,
     ): Call<Boolean>
 
     @PUT("Task")
@@ -37,9 +37,9 @@ interface TaskService {
     fun update(
         @Field("Id") id: Int,
         @Field("PriorityId") priorityId: Int,
-        @Field("PriorityId") description: String,
-        @Field("PriorityId") dueDate: String,
-        @Field("PriorityId") complete: Boolean,
+        @Field("Description") description: String,
+        @Field("DueDate") dueDate: String,
+        @Field("Complete") complete: Boolean,
     ): Call<Boolean>
 
     @PUT("Task/Complete")
